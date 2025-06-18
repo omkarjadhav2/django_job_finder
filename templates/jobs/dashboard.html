@@ -1,0 +1,4 @@
+<h2>Employer Dashboard</h2>
+{% for job in jobs %}
+  <p>{{ job.title }} - {{ job.is_approved }}</p>
+{% endfor %}

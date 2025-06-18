@@ -26,15 +26,11 @@ SECRET_KEY = 'django-insecure-gnhzc=o0(qb18)^x4&_k3i-winvyqz#*sw!!)hvfjt6mxm-vmi
 DEBUG = True
 
 ALLOWED_HOSTS = []
+AUTH_USER_MODEL = 'users.CustomUser'
 
-SITE_ID = 1
 
 LOGIN_REDIRECT_URL = "/"
 
-AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
-]
 
 
 # Application definition
@@ -46,8 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sites',
     'users',
+    'jobs',
 ]
 
 MIDDLEWARE = [
@@ -86,16 +82,10 @@ WSGI_APPLICATION = 'my_job_finder.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres', 
-        'USER': 'omkarjadhav',  
-        'PASSWORD': '39375dc58036',  
-        'HOST': 'django-job-application.c7skmyooa64b.eu-north-1.rds.amazonaws.com', 
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
