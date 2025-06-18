@@ -6,16 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-    {% load socialaccount %}
-    {% if request.user.is_authenticated %}
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque obcaecati harum ullam, nulla quis officiis velit minus labore exercitationem cumque explicabo iusto tenetur consectetur officia molestiae quidem omnis ipsum unde!</p>
-    <p>my name is {{myname}}</p>
-    <p>im here for gaming </p>
-    <a href="{% url 'account_logout' %}">Logout</a>
-    {% else %}
-    <a href="{% provider_login_url 'github' %}"><p>login with github</p></a>
-    {% endif %}
-    
+hello bhai
     
 </body>
 </html>

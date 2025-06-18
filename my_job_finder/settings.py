@@ -47,10 +47,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.github',
     'users',
 ]
 
@@ -62,7 +58,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = 'my_job_finder.urls'
@@ -149,15 +144,3 @@ STATICFILES_DIRS = [
     BASE_DIR / "static"
 ]
 
-SOCIALACCOUNT_PROVIDERS = {
-    'github': {
-        # For each OAuth based provider, either add a ``SocialApp``
-        # (``socialaccount`` app) containing the required client
-        # credentials, or list them here:
-        'APP': {
-            'client_id': 'Ov23liEt9EE0PHNII00e',
-            'secret': 'b22e5237838167065da41a85cb674e97f0d66d09',
-            'key': ''
-        }
-    }
-}
