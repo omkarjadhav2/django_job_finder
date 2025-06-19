@@ -1,15 +1,18 @@
-from django.shortcuts import render , HttpResponse
 
+
+
+
+from django.shortcuts import render, redirect
+from django.contrib.auth import login ,authenticate
+from .forms import EmployerRegisterForm, SeekerRegisterForm
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render , HttpResponse
 
 def members(request):
     context = {
-        'myname':'omkar'
+        'user': 'omkar'
     }
-    return render(request , 'registration/index.html' , context)
-
-from django.shortcuts import render, redirect
-from django.contrib.auth import login
-from .forms import EmployerRegisterForm, SeekerRegisterForm
+    return render(request , 'registration/index.html' )
 
 def register_employer(request):
     if request.method == 'POST':
@@ -32,3 +35,16 @@ def register_seeker(request):
     else:
         form = SeekerRegisterForm()
     return render(request, 'registration/register_seeker.html', {'form': form})
+
+def user_login(request):
+    if request.method =='POST':
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('home')
+        else:
+            return render(request, 'registration/login.html', {'error': 'Invalid login credentials'})
+    return render(request, 'registration/login.html')
+        

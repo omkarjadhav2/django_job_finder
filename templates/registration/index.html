@@ -6,7 +6,28 @@
     <title>Document</title>
 </head>
 <body>
-hello bhai
-    
+{% if user.is_authenticated %}
+  <p>Welcome, {{ user.username }}!</p>
+  <p>Your email: {{ user.email }}</p>
+{% else %}
+  <p>You are not logged in.</p>
+{% endif %}
+
+
+{%if user.is_seeker%}
+<p>You are a seeker</p>
+{% elif user.is_employer %}
+<p>You are a employer</p>
+{% elif user.is_staff %}
+<p>You are a staff</p>
+{% else %}
+  <p>You are not logged in.</p>
+{% endif %}
+
+<form action="{% url 'logout' %}" method="post">
+  {% csrf_token %}
+  <button type="submit">Log Out</button>
+</form>
+
 </body>
 </html>
