@@ -1,14 +1,10 @@
-
-
-
-
 from django.shortcuts import render, redirect
-from django.contrib.auth import login ,authenticate
+from django.contrib.auth import login ,authenticate , logout
 from .forms import EmployerRegisterForm, SeekerRegisterForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render , HttpResponse
-
-def members(request):
+from django.contrib import messages
+def home(request):
     context = {
         'user': 'omkar'
     }
@@ -43,8 +39,16 @@ def user_login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
+            messages.success(request, 'Login successful.')
             return redirect('home')
         else:
             return render(request, 'registration/login.html', {'error': 'Invalid login credentials'})
     return render(request, 'registration/login.html')
         
+def user_logout(request):
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            logout(request)
+            print("function working")
+            messages.success(request, 'Logout successful.')
+    return redirect('login_user')
