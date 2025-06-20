@@ -1,4 +1,13 @@
 <h2>Employer Dashboard</h2>
 {% for job in jobs %}
-  <p>{{ job.title }} - {{ job.is_approved }}</p>
+  <p>{{ job.title }} - {{ job.is_approved }} {{job.id}}</p>
+  <a href="update/{{job.id}}">update</a>
 {% endfor %}
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
