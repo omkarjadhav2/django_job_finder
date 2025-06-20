@@ -2,6 +2,7 @@
 {% for job in jobs %}
   <p>{{ job.title }} - {{ job.is_approved }} {{job.id}}</p>
   <a href="update/{{job.id}}">update</a>
+  <a href="delete/{{job.id}}">Delete</a>
 {% endfor %}
 
 {% if messages %}

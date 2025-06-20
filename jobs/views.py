@@ -37,3 +37,16 @@ def update_post(request, id):
         return redirect('employer_dashboard')
 
     return render(request, 'jobs/update_job.html', {'job': job})
+
+@login_required
+@employer_required
+def delete_post(request, id):
+    job = get_object_or_404(Job, employer=request.user, id=id)
+
+    if request.method == 'POST':
+        job.delete()
+
+        messages.success(request, 'Post deleted successfully.')
+        return redirect('employer_dashboard')
+
+    return render(request, 'jobs/delete_job.html', {'job': job})

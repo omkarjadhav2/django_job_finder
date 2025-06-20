@@ -1,0 +1,18 @@
+<h2>delete  a Job</h2>
+
+{% if job %}
+<form method="post">
+  {% csrf_token %}
+  <p>Are you sure you want to delete this post?</p>
+  <button type="submit">Yes</button>
+  <a href="/jobs/dashboard">no</a>
+</form>
+{% endif %}
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
