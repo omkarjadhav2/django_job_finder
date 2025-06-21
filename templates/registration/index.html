@@ -29,5 +29,11 @@
   <button type="submit">Log Out</button>
 </form>
 
+{% if jobs %}
+{% for job in  jobs %}
+<li>{{job.title}}   {{job.description}}</li>
+{% endfor %}
+{% endif %}
+
 </body>
 </html>

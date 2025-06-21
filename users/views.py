@@ -2,13 +2,16 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login ,authenticate , logout
 from .forms import EmployerRegisterForm, SeekerRegisterForm
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render , HttpResponse
+from django.shortcuts import render 
 from django.contrib import messages
-def home(request):
+from jobs.models import Job
+
+def show_jobs(request):
+    jobs = Job.objects.filter(is_approved = True)
     context = {
-        'user': 'omkar'
+        'jobs': jobs
     }
-    return render(request , 'registration/index.html' )
+    return render(request , 'registration/index.html' , context )
 
 def register_employer(request):
     if request.method == 'POST':
