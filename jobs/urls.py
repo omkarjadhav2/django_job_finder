@@ -4,6 +4,6 @@ from . import views
 urlpatterns = [
     path('post/', views.post_job, name='post_job'),
     path('dashboard/', views.employer_dashboard, name='employer_dashboard'),
-    path('dashboard/update/<int:id>/', views.update_post, name='update_job'),
-    path('dashboard/delete/<int:id>/', views.delete_post, name='delete_job'),
+    path('dashboard/update/<slug:slug>/', views.update_post, name='update_job'),
+    path('dashboard/delete/<slug:slug>/', views.delete_post, name='delete_job'),
 ]

@@ -11,3 +11,5 @@ class EmployerProfile(models.Model):
 
 class SeekerProfile(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    firstname = models.CharField(max_length=255)
+    lastname = models.CharField(max_length=255)

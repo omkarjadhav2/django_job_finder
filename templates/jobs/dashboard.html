@@ -1,8 +1,10 @@
 <h2>Employer Dashboard</h2>
+<a href="/jobs/post/">Create job</a>
+
 {% for job in jobs %}
   <p>{{ job.title }} - {{ job.is_approved }} {{job.id}}</p>
-  <a href="update/{{job.id}}">update</a>
-  <a href="delete/{{job.id}}">Delete</a>
+  <a href="update/{{job.slug}}">update</a>
+  <a href="delete/{{job.slug}}">Delete</a>
 {% endfor %}
 
 {% if messages %}

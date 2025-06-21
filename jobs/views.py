@@ -3,16 +3,21 @@ from .models import Job
 from django.contrib.auth.decorators import login_required
 from users.decorators import employer_required
 from django.contrib import messages
+from jobs.forms import JobForm
 
 @login_required
 @employer_required
 def post_job(request):
-    if request.method == 'POST':
-        title = request.POST['title']
-        description = request.POST['description']
-        Job.objects.create(employer=request.user, title=title, description=description)
-        return redirect('employer_dashboard')
-    return render(request, 'jobs/post_job.html')
+    if request.method == "POST":
+        form = JobForm(request.POST)
+        if form.is_valid():
+            job = form.save(commit=False)
+            job.employer = request.user  
+            job.save()
+            return redirect('employer_dashboard')  
+    else:
+        form = JobForm()
+    return render(request, 'jobs/post_job.html', {'form': form})
 
 @login_required
 @employer_required
@@ -22,8 +27,8 @@ def employer_dashboard(request):
 
 @login_required
 @employer_required
-def update_post(request, id):
-    job = get_object_or_404(Job, employer=request.user, id=id)
+def update_post(request, slug):
+    job = get_object_or_404(Job, employer=request.user, slug=slug)
 
     if request.method == 'POST':
         title = request.POST['title']
@@ -40,8 +45,8 @@ def update_post(request, id):
 
 @login_required
 @employer_required
-def delete_post(request, id):
-    job = get_object_or_404(Job, employer=request.user, id=id)
+def delete_post(request, slug):
+    job = get_object_or_404(Job, employer=request.user, slug=slug)
 
     if request.method == 'POST':
         job.delete()
