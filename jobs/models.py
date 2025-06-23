@@ -2,7 +2,14 @@ from django.db import models
 from users.models import CustomUser
 from django.utils.text import slugify
 
+
+
 class Job(models.Model):
+    JOB_TYPE_CHOICES = [
+        ('fulltime', 'Full-Time'),
+        ('parttime' , 'Part-Time'),
+        ('internship' , 'Internship'),
+    ]
     employer = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     id = models.IntegerField(primary_key=True)
     title = models.CharField(max_length=255)
@@ -15,6 +22,10 @@ class Job(models.Model):
     department = models.CharField(max_length=250)
     education = models.CharField(max_length=500)
     skills = models.TextField()
+    location = models.CharField(max_length=250)
+    min_salary_lpa = models.DecimalField(max_digits=5 , decimal_places=2 , null=True , blank=True)
+    max_salary_lpa = models.DecimalField(max_digits=5 , decimal_places=2 , null=True , blank=True)
+    job_type = models.CharField(max_length=20 , choices= JOB_TYPE_CHOICES , default='fulltime')
 
     def __str__(self):
         return self.title
@@ -29,3 +40,5 @@ class Job(models.Model):
                 counter += 1
             self.slug = slug
         super().save(*args, **kwargs)
+
+
