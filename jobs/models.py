@@ -3,6 +3,12 @@ from users.models import CustomUser
 from django.utils.text import slugify
 
 
+class Location(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
 
 class Job(models.Model):
     JOB_TYPE_CHOICES = [
@@ -22,7 +28,7 @@ class Job(models.Model):
     department = models.CharField(max_length=250)
     education = models.CharField(max_length=500)
     skills = models.TextField()
-    location = models.CharField(max_length=250)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE)
     min_salary_lpa = models.DecimalField(max_digits=5 , decimal_places=2 , null=True , blank=True)
     max_salary_lpa = models.DecimalField(max_digits=5 , decimal_places=2 , null=True , blank=True)
     job_type = models.CharField(max_length=20 , choices= JOB_TYPE_CHOICES , default='fulltime')

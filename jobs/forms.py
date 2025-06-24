@@ -3,6 +3,7 @@ from .models import Job
 
 class JobForm(ModelForm):
     class Meta:
-        model= Job
-        fields = '__all__'
-        fields = ['title','description','role','industry','department','education','skills', 'location','min_salary_lpa','max_salary_lpa','job_type']
+        model = Job
+        fields = ['title', 'description', 'role', 'industry', 'department',
+                  'education', 'skills', 'location', 'min_salary_lpa',
+                  'max_salary_lpa', 'job_type']

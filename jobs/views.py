@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect ,get_object_or_404
-from .models import Job
+from .models import Job , Location
 from django.contrib.auth.decorators import login_required
 from users.decorators import employer_required
 from django.contrib import messages
@@ -18,7 +18,7 @@ def post_job(request):
             return redirect('employer_dashboard')  
     else:
         form = JobForm()
-    return render(request, 'jobs/post_job.html', {'form': form})
+    return render(request, 'jobs/post_job.html', {'form': form })
 
 @login_required
 @employer_required

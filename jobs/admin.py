@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Job 
+from .models import Job , Location
 from .forms import JobForm
 
 
@@ -10,6 +10,5 @@ class JobAdmin(admin.ModelAdmin):
     list_filter = ['is_approved', 'created_at']
     search_fields = ['title', 'description', 'role', 'employer__email']
     ordering = ['-created_at']
-    form = JobForm
     
-
+admin.site.register(Location)
