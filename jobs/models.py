@@ -32,6 +32,8 @@ class Job(models.Model):
     min_salary_lpa = models.DecimalField(max_digits=5 , decimal_places=2 , null=True , blank=True)
     max_salary_lpa = models.DecimalField(max_digits=5 , decimal_places=2 , null=True , blank=True)
     job_type = models.CharField(max_length=20 , choices= JOB_TYPE_CHOICES , default='fulltime')
+    company_name = models.CharField(max_length=250)
+    
 
     def __str__(self):
         return self.title

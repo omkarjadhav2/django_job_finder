@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login ,authenticate , logout
+from django.contrib.auth import login ,authenticate , logout 
 from .forms import EmployerRegisterForm, SeekerRegisterForm
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render 
+from django.shortcuts import render , get_object_or_404
 from django.contrib import messages
 from jobs.models import Job
 
@@ -11,7 +11,7 @@ def show_jobs(request):
     context = {
         'jobs': jobs
     }
-    return render(request , 'registration/index.html' , context )
+    return render(request , 'users/index.html' , context )
 
 def register_employer(request):
     if request.method == 'POST':
@@ -52,6 +52,14 @@ def user_logout(request):
     if request.method == 'POST':
         if request.user.is_authenticated:
             logout(request)
-            print("function working")
             messages.success(request, 'Logout successful.')
     return redirect('login_user')
+
+
+def job_card(request , slug):
+    job = get_object_or_404(Job, slug=slug)
+    print(job)
+    return render(request, 'users/job_card.html' , {'job':job})
+
+def apply_for_job(request , slug):
+    job = get_object_or_404(Job, slug=slug)

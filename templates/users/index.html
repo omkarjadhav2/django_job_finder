@@ -1,0 +1,38 @@
+{% extends "users/base.html" %}
+
+  {% block title %}
+      Homepage
+      {% endblock %}
+
+  {% block content %}
+
+  
+{% if user.is_authenticated %}
+  <p>Welcome, {{ user.username }}!</p>
+  <p>Your email: {{ user.email }}</p>
+{% else %}
+  <p>You are not logged in.</p>
+{% endif %}
+
+
+{%if user.is_seeker%}
+<p>You are a seeker</p>
+{% elif user.is_employer %}
+<p>You are a employer</p>
+{% elif user.is_staff %}
+<p>You are a staff</p>
+{% else %}
+  <p>You are not logged in.</p>
+{% endif %}
+
+{% for job in jobs %}
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">{{ job.title }}</h5>
+    <p class="card-text">{{ job.description }}</p>
+    <a href="/jobcard/{{job.slug}}" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
+{% endfor %}
+
+{% endblock %}
