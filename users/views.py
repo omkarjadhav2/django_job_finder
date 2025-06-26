@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login ,authenticate , logout 
-from .forms import EmployerRegisterForm, SeekerRegisterForm
+from .forms import SeekerRegisterForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render , get_object_or_404
 from django.contrib import messages
@@ -13,16 +13,7 @@ def show_jobs(request):
     }
     return render(request , 'users/index.html' , context )
 
-def register_employer(request):
-    if request.method == 'POST':
-        form = EmployerRegisterForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect('employer_dashboard')
-    else:
-        form = EmployerRegisterForm()
-    return render(request, 'registration/register_employer.html', {'form': form})
+
 
 def register_seeker(request):
     if request.method == 'POST':

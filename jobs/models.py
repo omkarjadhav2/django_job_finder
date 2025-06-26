@@ -2,7 +2,6 @@ from django.db import models
 from users.models import CustomUser
 from django.utils.text import slugify
 
-
 class Location(models.Model):
     name = models.CharField(max_length=255)
 
@@ -27,7 +26,7 @@ class Job(models.Model):
     industry = models.CharField(max_length=250)
     department = models.CharField(max_length=250)
     education = models.CharField(max_length=500)
-    skills = models.TextField()
+    skills = models.CharField(max_length=250)
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
     min_salary_lpa = models.DecimalField(max_digits=5 , decimal_places=2 , null=True , blank=True)
     max_salary_lpa = models.DecimalField(max_digits=5 , decimal_places=2 , null=True , blank=True)

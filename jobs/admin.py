@@ -1,6 +1,5 @@
 from django.contrib import admin
-from .models import Job , Location
-from .forms import JobForm
+from .models import Job , Location 
 
 
 @admin.register(Job)
@@ -12,3 +11,4 @@ class JobAdmin(admin.ModelAdmin):
     ordering = ['-created_at']
     
 admin.site.register(Location)
+

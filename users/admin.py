@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import CustomUser
 from django.contrib.auth.admin import UserAdmin
-from .models import CustomUser, EmployerProfile, SeekerProfile
+from .models import CustomUser, SeekerProfile
 
 @admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
@@ -11,5 +11,5 @@ class CustomUserAdmin(UserAdmin):
         ('User Type', {'fields': ('is_employer', 'is_seeker')}),
     )
 
-admin.site.register(EmployerProfile)
+
 admin.site.register(SeekerProfile)

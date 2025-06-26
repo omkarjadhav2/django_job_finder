@@ -1,5 +1,9 @@
 <h2>Employer Dashboard</h2>
 <a href="/jobs/post/">Create job</a>
+<form action="{% url 'logout' %}" method="post">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-primary">Log Out</button>
+</form>
 
 {% for job in jobs %}
   <p>{{ job.title }} - {{ job.is_approved }} {{job.id}}</p>
