@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'users',
     'jobs',
     'employer',
+    'django_select2',
 ]
 
 MIDDLEWARE = [

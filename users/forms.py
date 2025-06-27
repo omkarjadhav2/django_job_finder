@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import CustomUser, SeekerProfile
+from .models import CustomUser, SeekerProfile 
+from django_select2.forms import ModelSelect2MultipleWidget
+
 
 
 class SeekerRegisterForm(UserCreationForm):
@@ -22,3 +24,19 @@ class SeekerRegisterForm(UserCreationForm):
             last_name=user.last_name
         )
         return user
+
+
+class SeekerProfileForm(forms.ModelForm):
+    class Meta:
+        model = SeekerProfile
+        fields = [
+            'first_name',
+            'last_name',
+            'contact',
+            'skills',
+            'education_level',
+            'education_field',
+            'experience_company',
+            'company_duration',
+        ]
+    

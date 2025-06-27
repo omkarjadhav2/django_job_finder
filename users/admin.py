@@ -11,5 +11,10 @@ class CustomUserAdmin(UserAdmin):
         ('User Type', {'fields': ('is_employer', 'is_seeker')}),
     )
 
+@admin.register(SeekerProfile)
+class SeekerProfileAdmin(admin.ModelAdmin):
+    list_display = ['first_name', 'last_name', 'slug']
+    prepopulated_fields = {"slug": ("first_name", "last_name")}
+    search_fields = ['first_name', 'last_name', 'slug']
 
-admin.site.register(SeekerProfile)
+

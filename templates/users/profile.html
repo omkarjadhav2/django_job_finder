@@ -1,0 +1,15 @@
+{% extends "users/base.html" %}
+{% block content %}
+{% if user_profile %}
+  <h2>{{ user_profile.first_name }} {{ user_profile.last_name }}</h2>
+  <p>Contact: {{ user_profile.contact }}</p>  
+  <p>skills: {{ user_profile.skills }}</p>  
+  <p>Education field: {{ user_profile.education_field }}</p>  
+  <p>Experience company: {{ user_profile.experience_company}}</p>  
+  <p>Company duration: {{ user_profile.company_duration }}</p>  
+
+
+
+  <a href="{% url 'edit_profile' %}" class="btn btn-dark">Edit Profile</a>
+{% endif %}
+{% endblock %}

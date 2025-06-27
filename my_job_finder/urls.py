@@ -23,5 +23,6 @@ urlpatterns = [
     path('employer/', include('employer.urls')),
     path('jobs/', include('jobs.urls')),
     path('accounts/', include('django.contrib.auth.urls')),  # login, logout 
+    path("select2/", include("django_select2.urls")),
 ]
 
