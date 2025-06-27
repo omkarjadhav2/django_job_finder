@@ -34,9 +34,5 @@ class SeekerProfileForm(forms.ModelForm):
             'last_name',
             'contact',
             'skills',
-            'education_level',
-            'education_field',
-            'experience_company',
-            'company_duration',
         ]
     

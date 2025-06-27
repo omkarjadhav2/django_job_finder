@@ -3,7 +3,7 @@
 {% if user_profile %}
   <h2>{{ user_profile.first_name }} {{ user_profile.last_name }}</h2>
   <p>Contact: {{ user_profile.contact }}</p>  
-  <p>skills: {{ user_profile.skills }}</p>  
+  <p>skills: {{ user_profile.location.city }}</p>  
   <p>Education field: {{ user_profile.education_field }}</p>  
   <p>Experience company: {{ user_profile.experience_company}}</p>  
   <p>Company duration: {{ user_profile.company_duration }}</p>  
