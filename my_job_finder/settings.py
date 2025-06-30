@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'bootstrap5',
     'users',
     'jobs',
-    'employer',
     'django_select2',
 ]
 

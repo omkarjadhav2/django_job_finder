@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect ,get_object_or_404
 from .models import Job , Location
 from django.contrib.auth.decorators import login_required
-from employer.decorators import employer_required
+from users.decorators import employer_required
 from django.contrib import messages
 from jobs.forms import JobForm
 
