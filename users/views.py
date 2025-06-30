@@ -4,8 +4,11 @@ from .forms import SeekerRegisterForm , SeekerProfileForm , EmployerRegisterForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render , get_object_or_404
 from django.contrib import messages
-from jobs.models import Job
+from jobs.models import Job , Application
 from .models import SeekerProfile 
+from jobs.forms import ApplicationForm
+from django.utils import timezone
+
 def show_jobs(request):
     jobs = Job.objects.filter(is_approved = True)
     context = {
@@ -63,6 +66,23 @@ def job_card(request , slug):
     print(job)
     return render(request, 'users/job_card.html' , {'job':job})
 
+@login_required
+def apply_for_job(request, slug):
+    job = get_object_or_404(Job, slug=slug)
+    if request.method == 'POST':
+        form = ApplicationForm(request.POST)
+        if form.is_valid():
+            application = form.save(commit=False)
+            application.job = job
+            application.applicant = request.user
+            application.applied_at = timezone.now()
+            application.save()
+            messages.success(request, "applied succesfully")
+            return redirect('home')
+    else:
+        form = ApplicationForm()
+    return render (request , 'users/apply_job.html' , {'form': form})
+
 
 
 def profile(request):
@@ -83,3 +103,9 @@ def edit_profile(request):
         form = SeekerProfileForm(instance=user_profile)
 
     return render(request, 'users/edit_profile.html', {'form': form})
+
+@login_required
+def seeker_dashboard(request):
+    applications = Application.objects.filter(applicant=request.user)
+    print(applications)
+    return render(request, 'users/seeker_dashboard.html', {'applications': applications})

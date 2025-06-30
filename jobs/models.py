@@ -49,3 +49,12 @@ class Job(models.Model):
         super().save(*args, **kwargs)
 
 
+class Application(models.Model):
+    applicant = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='applications')
+    job = models.ForeignKey(Job, on_delete=models.CASCADE, related_name='applications')
+    applied_at = models.DateTimeField(auto_now_add=True)
+    content = models.TextField()
+    experience = models.TextField()
+
+    def __str__(self):
+        return f"{self.applicant.username} -> {self.job.title}"

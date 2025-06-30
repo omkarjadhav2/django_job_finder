@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Job , Location 
+from .models import Job , Location ,Application
 
 
 @admin.register(Job)
@@ -12,3 +12,8 @@ class JobAdmin(admin.ModelAdmin):
     
 admin.site.register(Location)
 
+@admin.register(Application)
+class ApplicationAdmin(admin.ModelAdmin):
+    list_display = ('applicant', 'job', 'applied_at')
+    readonly_fields = ('applied_at',)
+    fields = ('applicant', 'job', 'content', 'experience', 'applied_at')

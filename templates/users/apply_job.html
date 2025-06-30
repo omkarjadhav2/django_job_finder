@@ -1,0 +1,15 @@
+{% extends "users/base.html" %}
+{% block title %}
+      apply for job
+      {% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2>apply for this job{{job.title}}</h2>
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">apply</button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "users/base.html" %}
+{% block title %}
+      seeker dashboard
+      {% endblock %}
+
+{% block content %}
+{% if applications %}
+{% for app in applications %}
+ <h2>Job name : {{app.job.title}}</h2>
+ <h2>applied at : {{app.applied_at}}</h2>
+ <p>content : {{app.content}}</p>
+ <p>experience : {{app.experience}}</p>
+ 
+ 
+{% endfor %}
+{% endif %}
+{% endblock %}

@@ -3,7 +3,7 @@ from .models import Job , Location
 from django.contrib.auth.decorators import login_required
 from users.decorators import employer_required
 from django.contrib import messages
-from jobs.forms import JobForm
+from jobs.forms import JobForm , ApplicationForm
 
 
 @login_required
@@ -56,4 +56,5 @@ def delete_post(request, slug):
         return redirect('employer_dashboard')
 
     return render(request, 'jobs/delete_job.html', {'job': job})
+
 
