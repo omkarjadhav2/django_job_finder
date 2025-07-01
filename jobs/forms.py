@@ -7,6 +7,7 @@ class JobForm(ModelForm):
         fields = ['title', 'description','company_name', 'role', 'industry', 'department',
                   'education', 'skills', 'location', 'min_salary_lpa',
                   'max_salary_lpa', 'job_type']
+        
 
 
 class ApplicationForm(ModelForm):

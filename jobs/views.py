@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect ,get_object_or_404
-from .models import Job , Location
+from .models import Job , Application
 from django.contrib.auth.decorators import login_required
 from users.decorators import employer_required
 from django.contrib import messages
@@ -57,4 +57,8 @@ def delete_post(request, slug):
 
     return render(request, 'jobs/delete_job.html', {'job': job})
 
-
+@login_required
+@employer_required
+def view_applications(request , slug):
+    applications = Application.objects.filter(job__employer = request.user ,job__slug = slug )
+    return render(request, 'jobs/job_applications.html', {'applications': applications})

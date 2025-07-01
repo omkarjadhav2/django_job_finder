@@ -1,13 +1,21 @@
 {% extends "users/base.html" %}
 {% block title %}
-      seeker dashboard
+      seeker applications
       {% endblock %}
 
 {% block content %}
 {% if applications %}
 {% for app in applications %}
+<h2>Name : {{app.applicant.first_name}}</h2>
+<h2>LastName : {{app.applicant.last_name}}</h2>
  <h2>Job name : {{app.job.title}}</h2>
  <h2>applied at : {{app.applied_at}}</h2>
+{% if app.applicant.seekerprofile.resume %}
+  <p>Resume: <a href="{{ app.applicant.seekerprofile.resume.url }}" target="_blank">Download</a></p>
+{% else %}
+  <p>No resume uploaded.</p>
+{% endif %}
+
 
   <a href="status/{{app.id}}" class="btn btn-dark">view status</a>
  

@@ -13,7 +13,7 @@ class SeekerProfile(models.Model):
     first_name = models.CharField(max_length=255, blank=True)
     last_name = models.CharField(max_length=255, blank=True)
     contact = models.CharField(max_length=15, blank=True)
-    skills = models.TextField(blank=True, help_text="Comma-separated skills, e.g. Python, JavaScript")
+    resume = models.FileField(null=True , blank=True , upload_to="resume/")
 
     slug = models.SlugField(unique=True, blank=True)
 

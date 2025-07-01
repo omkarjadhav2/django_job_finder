@@ -2,6 +2,7 @@ from django.db import models
 from users.models import CustomUser
 from django.utils.text import slugify
 
+
 class Location(models.Model):
     name = models.CharField(max_length=255)
 

@@ -6,9 +6,11 @@
 </form>
 
 {% for job in jobs %}
-  <p>{{ job.title }} - {{ job.is_approved }} {{job.id}}</p>
+  <p>{{ job.title }} - {{ job.is_approved }} {{job.id}}</p> 
   <a href="update/{{job.slug}}">update</a>
   <a href="delete/{{job.slug}}">Delete</a>
+  <a href="{% url 'view_applications' job.slug %}">View Applicants</a>
+  
 {% endfor %}
 
 {% if messages %}

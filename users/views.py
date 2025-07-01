@@ -8,9 +8,11 @@ from jobs.models import Job , Application
 from .models import SeekerProfile 
 from jobs.forms import ApplicationForm
 from django.utils import timezone
+from .decorators import employer_required
 
 def show_jobs(request):
-    jobs = Job.objects.filter(is_approved = True)
+    jobs = Job.objects.filter(is_approved=True).order_by('-created_at')
+    
     context = {
         'jobs': jobs
     }
@@ -63,7 +65,6 @@ def user_logout(request):
 
 def job_card(request , slug):
     job = get_object_or_404(Job, slug=slug)
-    print(job)
     return render(request, 'users/job_card.html' , {'job':job})
 
 @login_required
@@ -95,10 +96,10 @@ def edit_profile(request):
     user_profile = get_object_or_404(SeekerProfile, user=request.user)
 
     if request.method == 'POST':
-        form = SeekerProfileForm(request.POST, instance=user_profile)
+        form = SeekerProfileForm(request.POST ,request.FILES, instance=user_profile  )
         if form.is_valid():
             form.save()
-            return redirect('profile')  # adjust this if your url name is different
+            return redirect('profile') 
     else:
         form = SeekerProfileForm(instance=user_profile)
 
@@ -107,5 +108,10 @@ def edit_profile(request):
 @login_required
 def seeker_dashboard(request):
     applications = Application.objects.filter(applicant=request.user)
-    print(applications)
     return render(request, 'users/seeker_dashboard.html', {'applications': applications})
+
+@login_required
+def application_status(request, id):
+    application = get_object_or_404(Application, pk = id ,applicant = request.user)
+    return render(request, 'users/application_status.html', {'application': application})
+

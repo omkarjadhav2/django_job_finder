@@ -55,6 +55,6 @@ class SeekerProfileForm(forms.ModelForm):
             'first_name',
             'last_name',
             'contact',
-            'skills',
+            'resume',
         ]
     
