@@ -25,14 +25,33 @@
   <p>You are not logged in.</p>
 {% endif %}
 
-{% for job in jobs %}
-<div class="card">
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      {% for job in jobs %}
+<div class="card mb-3">
   <div class="card-body">
     <h5 class="card-title">{{ job.title }}</h5>
-    <p class="card-text">{{ job.description }}</p>
-    <a href="/jobcard/{{job.slug}}" class="btn btn-primary">Go somewhere</a>
+    <h6 class="card-subtitle mb-2 text-muted">freelancing project</h6>
+    <p class="card-text">Remote</p>
+    <div>
+      <span class="badge bg-success">₹4,00,000 - ₹6,00,000 a year</span>
+      <span class="badge bg-primary">Full-time</span>
+      <span class="badge bg-light text-dark">Day shift</span>
+      <span class="badge bg-info text-dark">Health insurance</span>
+    </div>
+    <a href="/jobcard/{{job.slug}}" class="btn btn-primary">Apply</a>
   </div>
 </div>
+
 {% endfor %}
+    </div>
+    <div class="col-md-8">
+      <!-- Job Detail View -->
+    </div>
+  </div>
+</div>
+
+
 
 {% endblock %}

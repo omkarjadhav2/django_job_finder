@@ -1,6 +1,7 @@
 from django.db import models
 from users.models import CustomUser
 from django.utils.text import slugify
+from ckeditor.fields import RichTextField
 
 
 class Location(models.Model):
@@ -20,7 +21,7 @@ class Job(models.Model):
     id = models.IntegerField(primary_key=True)
     title = models.CharField(max_length=255)
     slug = models.SlugField(blank=True, unique=True)
-    description = models.TextField()
+    description = RichTextField(null=True , blank=True)
     is_approved = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     role = models.CharField(max_length=250)

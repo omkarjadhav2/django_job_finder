@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'users',
     'jobs',
     'django_select2',
+    'ckeditor',
 ]
 
 MIDDLEWARE = [
@@ -140,3 +141,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_DIRS = [
     BASE_DIR / "static"
 ]
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': [
+            ['Format', 'Bold', 'Italic', 'Link', 'BulletedList', 'NumberedList', 'Table', 'Undo', 'Redo'],
+        ],
+        'height': 300,
+        'width': '100%',
+    }
+}
