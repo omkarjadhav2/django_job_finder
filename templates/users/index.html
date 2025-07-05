@@ -17,7 +17,7 @@
 <form action="{% url 'search_results' %}" method="get">
   <input name="q" type="text" placeholder="Search...">
 </form>
-{% for job in jobs %}
+{% for job in page_obj.object_list %}
 <div class="container">
   <div class="d-flex flex-column align-items-center">
     <div class="card col-12 col-sm-12 col-lg-6 my-3 mx-2">
@@ -39,4 +39,15 @@
   </div>
 </div>
 
-{% endfor %} {% endblock %}
+{% endfor %} 
+<center>
+        {%if page_obj.has_previous %} {# whether the previous page exists #}
+            <a href="?page={{page_obj.previous_page_number}}"><</a> {# link to the prev page #}
+        {% endif %}
+        <span>{{page_obj.number}}</span> {# the current page number #}
+      
+        {%if page_obj.has_next %} {# whether the next page exists #}
+            <a href="?page={{page_obj.next_page_number}}">></a> {# link to the next page #}
+        {% endif %}
+    </center>
+{% endblock %}

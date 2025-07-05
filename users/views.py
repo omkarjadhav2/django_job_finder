@@ -11,13 +11,22 @@ from django.utils import timezone
 from .decorators import employer_required
 from django.views.generic import  ListView
 from django.db.models import Q
-
+from django.core.paginator import Paginator , PageNotAnInteger , EmptyPage
 
 def show_jobs(request):
     jobs = Job.objects.filter(is_approved=True).order_by('-created_at')
+    paginator = Paginator(jobs, 3)
+    page_number = request.GET.get('page')
+    try:
+        page_obj = paginator.get_page(page_number)
+    except PageNotAnInteger:
+        page_obj = paginator.page(1)
+    except EmptyPage:
+        page_obj = paginator.page(paginator.num_pages)
     
     context = {
-        'jobs': jobs
+        'jobs': jobs,
+        'page_obj': page_obj
     }
     return render(request , 'users/index.html' , context )
 
