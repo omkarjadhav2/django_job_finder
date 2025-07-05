@@ -46,8 +46,7 @@ INSTALLED_APPS = [
     'bootstrap5',
     'users',
     'jobs',
-    'django_select2',
-    'ckeditor',
+    'django_ckeditor_5',
 ]
 
 MIDDLEWARE = [
@@ -142,12 +141,15 @@ STATICFILES_DIRS = [
     BASE_DIR / "static"
 ]
 
-CKEDITOR_CONFIGS = {
+
+CKEDITOR_5_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
+
+CKEDITOR_5_CONFIGS = {
     'default': {
         'toolbar': [
-            ['Format', 'Bold', 'Italic', 'Link', 'BulletedList', 'NumberedList', 'Table', 'Undo', 'Redo'],
+            'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList',
+            '|', 'outdent', 'indent', '|', 'blockQuote', 'insertTable', 'undo', 'redo'
         ],
-        'height': 300,
-        'width': '100%',
+        'language': 'en',
     }
 }

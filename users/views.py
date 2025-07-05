@@ -9,6 +9,9 @@ from .models import SeekerProfile
 from jobs.forms import ApplicationForm
 from django.utils import timezone
 from .decorators import employer_required
+from django.views.generic import  ListView
+from django.db.models import Q
+
 
 def show_jobs(request):
     jobs = Job.objects.filter(is_approved=True).order_by('-created_at')
@@ -18,6 +21,15 @@ def show_jobs(request):
     }
     return render(request , 'users/index.html' , context )
 
+class SearchResultsView(ListView):
+    model = Job
+    template_name = 'users/search_results.html'
+    def get_queryset(self):
+        query = self.request.GET.get("q") 
+        object_list =  Job.objects.filter(
+            Q(title__icontains=query) | Q(skills__icontains=query)
+        )
+        return object_list
 
 
 def register_seeker(request):

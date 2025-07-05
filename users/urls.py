@@ -13,5 +13,6 @@ urlpatterns = [
     path('profile/edit/', views.edit_profile, name='edit_profile'),
     path('dashboard/', views.seeker_dashboard, name='seeker_dashboard'),
     path('dashboard/status/<int:id>', views.application_status, name='application_status'),
+    path("search/", views.SearchResultsView.as_view(), name="search_results"),
     
 ]

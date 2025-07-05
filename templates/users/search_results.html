@@ -1,23 +1,12 @@
-{% extends "users/base.html" %} {% block title %} Homepage {% endblock %}
- {% block content %}
- {% if user.is_authenticated %}
-<p>Welcome, {{ user.username }}!</p>
-<p>Your email: {{ user.email }}</p>
-{% else %}
-<p>You are not logged in.</p>
-{% endif %} {%if user.is_seeker%}
-<p>You are a seeker</p>
-{% elif user.is_employer %}
-<p>You are a employer</p>
-{% elif user.is_staff %}
-<p>You are a staff</p>
-{% else %}
-<p>You are not logged in.</p>
-{% endif %}
-<form action="{% url 'search_results' %}" method="get">
-  <input name="q" type="text" placeholder="Search...">
-</form>
-{% for job in jobs %}
+{% extends "users/base.html" %}
+{% block title %}
+      Search
+      {% endblock %}
+
+{% block content %}
+<h1>Search Results</h1>
+
+{% for job in object_list %}
 <div class="container">
   <div class="d-flex flex-column align-items-center">
     <div class="card col-12 col-sm-12 col-lg-6 my-3 mx-2">
@@ -39,4 +28,7 @@
   </div>
 </div>
 
-{% endfor %} {% endblock %}
+{% endfor %}
+
+</ul>
+{% endblock %}

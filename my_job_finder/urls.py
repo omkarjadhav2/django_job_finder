@@ -23,7 +23,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('users.urls')),
     path('jobs/', include('jobs.urls')),
-    path('accounts/', include('django.contrib.auth.urls')),  # login, logout 
+    path('accounts/', include('django.contrib.auth.urls')),   
     path("select2/", include("django_select2.urls")),
+    path('ckeditor5/', include('django_ckeditor_5.urls')),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 
