@@ -1,4 +1,5 @@
-{% extends "users/base.html" %} {% block title %} Homepage {% endblock %}
+{% extends "users/base.html" %}
+{% block title %} Homepage {% endblock %}
  {% block content %}
  {% if user.is_authenticated %}
 <p>Welcome, {{ user.username }}!</p>
@@ -14,13 +15,35 @@
 {% else %}
 <p>You are not logged in.</p>
 {% endif %}
-<form action="{% url 'search_results' %}" method="get">
-  <input name="q" type="text" placeholder="Search...">
-</form>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="/static/css/index.css">
+
+<div class="container col-12 col-sm-12 col-lg-9 mt-4">
+  <form action="{% url 'search_results' %}" method="get" class="p-2 rounded shadow bg-white d-flex align-items-center gap-2">
+
+    <div class="input-group flex-grow-1">
+      <span class="input-group-text bg-white border-0">
+        <i class="fas fa-search"></i>
+      </span>
+      <input name="q" type="text" class="form-control border-0" placeholder="Job title, keyword..." />
+    </div>
+
+    <div class="input-group flex-grow-1">
+      <span class="input-group-text bg-white border-0">
+        <i class="fas fa-map-marker-alt"></i>
+      </span>
+      <input name="L" type="text" class="form-control border-0" placeholder="City, state..." />
+    </div>
+    <button type="submit" class="btn btn-primary fw-semibold px-4 py-2" style="white-space: nowrap;">Find jobs</button>
+  </form>
+</div>
+
+
+
 {% for job in page_obj.object_list %}
 <div class="container">
   <div class="d-flex flex-column align-items-center">
-    <div class="card col-12 col-sm-12 col-lg-6 my-3 mx-2">
+    <div class="card col-12 col-sm-12 col-lg-6 my-3 mx-2 rounded shadow">
       <div class="card-body border border-info border-1 rounded">
         <h5 class="card-title">{{ job.title }}</h5>
         <h6 class="card-subtitle mb-2 text-muted">{{job.company_name}}</h6>
@@ -40,14 +63,25 @@
 </div>
 
 {% endfor %} 
-<center>
-        {%if page_obj.has_previous %} {# whether the previous page exists #}
-            <a href="?page={{page_obj.previous_page_number}}"><</a> {# link to the prev page #}
+<div class="container">
+  <nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+        {%if page_obj.has_previous %} 
+            <li class="page-item"><a href="?page={{page_obj.previous_page_number}}" class="page-link">Previous</a></li>
         {% endif %}
-        <span>{{page_obj.number}}</span> {# the current page number #}
+         {% for num in page_obj.paginator.page_range %}
+      {% if page_obj.number == num %}
+        <li class="page-item active"><a class="page-link" href="#">{{ num }}</a></li>
+      {% else %}
+        <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+      {% endif %}
+    {% endfor %}
       
-        {%if page_obj.has_next %} {# whether the next page exists #}
-            <a href="?page={{page_obj.next_page_number}}">></a> {# link to the next page #}
+        {%if page_obj.has_next %} 
+            <li class="page-item"><a class="page-link" href="?page={{page_obj.next_page_number}}">Next</a></li>
         {% endif %}
-    </center>
+        </ul>
+        </nav>
+    </div>
+
 {% endblock %}

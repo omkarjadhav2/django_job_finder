@@ -33,12 +33,18 @@ def show_jobs(request):
 class SearchResultsView(ListView):
     model = Job
     template_name = 'users/search_results.html'
+    paginate_by = 5
     def get_queryset(self):
         query = self.request.GET.get("q") 
-        object_list =  Job.objects.filter(
-            Q(title__icontains=query) | Q(skills__icontains=query)
-        )
-        return object_list
+        location = self.request.GET.get("L")
+        job_list = Job.objects.all() 
+        if query:
+            job_list = job_list.filter(
+                Q(title__icontains=query) | Q(skills__icontains=query)
+            )
+        if location:
+            job_list = job_list.filter(location__name__icontains=location)
+        return job_list
 
 
 def register_seeker(request):
