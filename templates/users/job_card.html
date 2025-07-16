@@ -1,13 +1,17 @@
 {% extends "users/base.html" %}
 
-<title>{% block title %} Homepage {% endblock %}</title>
+<title>{% block title %} {{ job.title }} at {{job.company_name}} {% endblock %}</title>
 
-{% block content %} {% if job %}
+{% block content %} 
+
+{% if job %}
+<div class="container my-2">
 <div class="card">
   <div class="card-body">
     <h5 class="card-title">{{ job.title }}</h5>
     <p class="card-text">{{ job.description | safe}}</p>
     <a href="/apply/{{job.slug}}" class="btn btn-primary">Apply</a>
   </div>
+</div>
 </div>
 {% endif %} hey {% endblock %}
