@@ -12,6 +12,7 @@ class JobAdmin(admin.ModelAdmin):
     
 admin.site.register(Location)
 
+
 @admin.register(Application)
 class ApplicationAdmin(admin.ModelAdmin):
     list_display = ('applicant', 'job', 'applied_at')

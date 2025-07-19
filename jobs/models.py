@@ -9,18 +9,7 @@ class Location(models.Model):
     def __str__(self):
         return self.name
 
-class Skill(models.Model):
-    name = models.CharField(max_length=100, unique=True)
-    slug = models.SlugField(unique=True, blank=True)
 
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.name)
-        super().save(*args, **kwargs)
-
-    def __str__(self):
-        return self.name
-    
 class Job(models.Model):
     JOB_TYPE_CHOICES = [
         ('Full-time', 'Full-Time'),
