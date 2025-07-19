@@ -2,78 +2,62 @@
 <html>
   <head>
     {% load django_bootstrap5 %} {% bootstrap_css %} {% bootstrap_javascript %}
+    <link rel="stylesheet" href="/static/css/index.css">
     
     <title>{% block title %}{% endblock %}</title>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light border border-1">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="{%url 'home'%}">
-          <h4 class="text-primary">Platypus</h4>
-        </a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{%url 'seeker_dashboard'%}">Dashboard</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdown"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Dropdown
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><hr class="dropdown-divider" /></li>
-                <li>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a
-                class="nav-link disabled"
-                href="#"
-                tabindex="-1"
-                aria-disabled="true"
-                >Disabled</a
-              >
-            </li>
-          </ul>
-          {% if user.is_authenticated %}
-          <a href="/profile" class="btn btn-primary">profile </a>
-          <form action="{% url 'logout' %}" method="post">
-  {% csrf_token %}
-  <button type="submit" class="btn btn-primary">Log Out</button>
-</form>
-          
-          {% else %}
-          <a href="/login" class="btn btn-primary"> Login </a>
-          <a href="/register/seeker" class="btn btn-dark">Register</a>
-          {% endif %}
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'home' %}">
+      <h4 class="text-primary">Platypus</h4>
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'seeker_dashboard' %}">Applications</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="#">Careers</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="#" tabindex="-1" aria-disabled="true">About us</a>
+        </li>
+      </ul>
+
+      {% if user.is_authenticated %}
+        <div class="d-flex align-items-center">
+          <span class="me-2">Welcome, <strong>{{ user.username }}</strong>!</span>
+          <a href="/profile" class="btn btn-primary mx-1">Profile</a>
+          <form action="{% url 'logout' %}" method="post" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary mx-1">Log Out</button>
+          </form>
         </div>
-      </div>
-    </nav>
+      {% else %}
+        <div class="d-flex">
+          <a href="/login" class="btn btn-primary mx-1">Login</a>
+          <a href="/register/seeker" class="btn btn-dark mx-1">Register</a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</nav>
 
     {% block content %} {% endblock %}
     <p>Footer</p>
