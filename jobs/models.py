@@ -16,6 +16,11 @@ class Job(models.Model):
         ('Part-time' , 'Part-Time'),
         ('Internship' , 'Internship'),
     ]
+    JOB_SUB_TYPE_CHOICES = [
+        ('In-Office', 'In-Office'),
+        ('Remote' , 'Remote'),
+        ('Hybrid' , 'Hybrid'),
+    ]
     employer = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     id = models.IntegerField(primary_key=True)
     title = models.CharField(max_length=255)
@@ -32,6 +37,8 @@ class Job(models.Model):
     min_salary_lpa = models.DecimalField(max_digits=5 , decimal_places=2 , null=True , blank=True)
     max_salary_lpa = models.DecimalField(max_digits=5 , decimal_places=2 , null=True , blank=True)
     job_type = models.CharField(max_length=20 , choices= JOB_TYPE_CHOICES , default='fulltime')
+    sub_type = models.CharField(max_length=20 , choices= JOB_SUB_TYPE_CHOICES , default='In-Office')
+    openings = models.IntegerField(null=True , blank=True)
     company_name = models.CharField(max_length=250)
     
 
