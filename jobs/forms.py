@@ -6,7 +6,7 @@ class JobForm(ModelForm):
     class Meta:
         model = Job
         fields = ['title', 'description','company_name', 'role', 'industry', 'department',
-                  'education', 'skills', 'location', 'job_type', 'sub_type','openings', 'min_salary_lpa',
+                  'education', 'skills', 'location', 'job_type', 'sub_type','openings', 'min_experience','max_experience','min_salary_lpa',
                   'max_salary_lpa']
         widgets = {
             'job_type': forms.RadioSelect,

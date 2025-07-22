@@ -36,10 +36,12 @@ class Job(models.Model):
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
     min_salary_lpa = models.DecimalField(max_digits=5 , decimal_places=2 , null=True , blank=True)
     max_salary_lpa = models.DecimalField(max_digits=5 , decimal_places=2 , null=True , blank=True)
-    job_type = models.CharField(max_length=20 , choices= JOB_TYPE_CHOICES , default='fulltime')
+    job_type = models.CharField(max_length=20 , choices= JOB_TYPE_CHOICES , default='Full-Time')
     sub_type = models.CharField(max_length=20 , choices= JOB_SUB_TYPE_CHOICES , default='In-Office')
     openings = models.IntegerField(null=True , blank=True)
     company_name = models.CharField(max_length=250)
+    min_experience = models.IntegerField(null=True , blank=True)
+    max_experience = models.IntegerField(null=True , blank=True)
     
 
     def __str__(self):

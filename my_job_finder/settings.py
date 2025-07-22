@@ -153,3 +153,6 @@ CKEDITOR_5_CONFIGS = {
         'language': 'en',
     }
 }
+
+TIME_ZONE = 'Asia/Kolkata'
+USE_TZ = True  

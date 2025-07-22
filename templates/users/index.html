@@ -31,20 +31,40 @@
   <div class="d-flex flex-column align-items-center">
     <div class="card job-card-container col-12 col-sm-12 col-lg-6 my-3 mx-2 rounded shadow">
       <div class="card-body border border-info border-1 rounded">
+        <a href="/jobcard/{{job.slug}}" class="stretched-link"></a>
         <h5 class="card-title">{{ job.title }}</h5>
         <h6 class="card-subtitle mb-2 text-muted">{{job.company_name}}</h6>
         <p class="card-text">{{job.location}}</p>
         <div>
+          <span class="badge bg-primary">{{job.sub_type}}</span>
           <span class="badge bg-success"
-            >₹{{job.min_salary_lpa}}LPA - {{job.max_salary_lpa}}LPA a year</span
-          >
+            >₹{{job.min_salary_lpa}} LPA - {{job.max_salary_lpa}} LPA</span>
           <span class="badge bg-primary">{{job.job_type}}</span>
-          <span class="badge bg-light text-dark">Day shift</span>
-          <span class="badge bg-info text-dark">Health insurance</span>
+          {% if job.min_experience == none %}
+          <span></span>
+          {% else %}
+          <span class="badge bg-light text-dark">{{ job.min_experience }} - {{ job.max_experience }} Years</span>
+          {% endif %}
+          <span class="badge bg-info text-dark">
+        Openings: 
+        {% if job.openings %}
+          {{ job.openings }}
+        {% else %}
+          Not disclosed
+        {% endif %}
+      </span>
         </div>
-        <a href="/jobcard/{{job.slug}}" class="btn btn-primary my-2">View Post</a>
+        <p class="card-text">Posted: 
+  {% if job.created_at.date == today %}
+    Today
+  {% else %}
+    {{ job.created_at|timesince }} ago
+  {% endif %}
+</p>
+
       </div>
     </div>
+    </a>
   </div>
 </div>
 

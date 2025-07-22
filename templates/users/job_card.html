@@ -1,17 +1,57 @@
 {% extends "users/base.html" %}
 
-<title>{% block title %} {{ job.title }} at {{job.company_name}} {% endblock %}</title>
+{% block title %}{{ job.title }} at {{ job.company_name }}{% endblock %}
 
-{% block content %} 
-
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 {% if job %}
 <div class="container my-2">
-<div class="card">
-  <div class="card-body">
-    <h5 class="card-title">{{ job.title }}</h5>
-    <p class="card-text">{{ job.description | safe}}</p>
-    <a href="/apply/{{job.slug}}" class="btn btn-primary">Apply</a>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">{{ job.title }}</h5>
+      <p class="card-text">{{ job.company_name }}</p>
+
+      <div class="container bg-info d-flex justify-content-around"> 
+        <i class="fa-solid fa-briefcase"></i>
+        <p class="card-text">{{ job.min_experience }} - {{ job.max_experience }} Years</p>
+
+        <i class="fa-solid fa-indian-rupee-sign"></i>
+      <p class="card-text">
+        {% if job.min_salary_lpa and job.max_salary_lpa %}
+          {{ job.min_salary_lpa }} LPA - {{ job.max_salary_lpa }} LPA
+        {% else %}
+          Salary: Not disclosed
+        {% endif %}
+      </p>
+<i class="fa-solid fa-location-dot"></i>
+      <p class="card-text">Location: {{ job.location }}</p>
+       <p class="card-text">
+        Openings: 
+        {% if job.openings %}
+          {{ job.openings }}
+        {% else %}
+          Not disclosed
+        {% endif %}
+      </p>
+      <p class="card-text">Posted: 
+  {% if job.created_at.date == today %}
+    Today
+  {% else %}
+    {{ job.created_at|timesince }} ago
+  {% endif %}
+</p>
+
+
+      </div>
+          <a href="/apply/{{ job.slug }}" class="btn btn-primary">Apply</a>
+      <hr>
+      <div class="card-text">{{ job.description|safe }}</div>
+    </div>
   </div>
 </div>
+{% else %}
+<div class="container my-2">
+  <div class="alert alert-warning">Job not found.</div>
 </div>
-{% endif %} hey {% endblock %}
+{% endif %}
+{% endblock %}
