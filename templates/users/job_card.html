@@ -4,53 +4,94 @@
 
 {% block content %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 {% if job %}
-<div class="container my-2">
-  <div class="card">
+<div class="container my-4">
+  <div class="card shadow">
     <div class="card-body">
-      <h5 class="card-title">{{ job.title }}</h5>
-      <p class="card-text">{{ job.company_name }}</p>
+      
+      
+      <h3 class="card-title">{{ job.title }}</h3>
+      <h5 class="text-muted mb-4">{{ job.company_name }}</h5>
 
-      <div class="container bg-info d-flex justify-content-around"> 
-        <i class="fa-solid fa-briefcase"></i>
-        <p class="card-text">{{ job.min_experience }} - {{ job.max_experience }} Years</p>
+      <div class="row g-3">
 
-        <i class="fa-solid fa-indian-rupee-sign"></i>
-      <p class="card-text">
-        {% if job.min_salary_lpa and job.max_salary_lpa %}
-          {{ job.min_salary_lpa }} LPA - {{ job.max_salary_lpa }} LPA
-        {% else %}
-          Salary: Not disclosed
-        {% endif %}
-      </p>
-<i class="fa-solid fa-location-dot"></i>
-      <p class="card-text">Location: {{ job.location }}</p>
-       <p class="card-text">
-        Openings: 
-        {% if job.openings %}
-          {{ job.openings }}
-        {% else %}
-          Not disclosed
-        {% endif %}
-      </p>
-      <p class="card-text">Posted: 
-  {% if job.created_at.date == today %}
-    Today
-  {% else %}
-    {{ job.created_at|timesince }} ago
-  {% endif %}
-</p>
+        <div class="col-md-6 col-lg-3">
+          <div class="d-flex align-items-center p-2 border rounded bg-light">
+            <i class="fa-solid fa-briefcase me-2 text-primary"></i>
+            <span>{{ job.min_experience }} - {{ job.max_experience }} Years</span>
+          </div>
+        </div>
 
+        <div class="col-md-6 col-lg-3">
+          <div class="d-flex align-items-center p-2 border rounded bg-light">
+            <i class="fa-solid fa-indian-rupee-sign me-2 text-success"></i>
+            <span>
+              {% if job.min_salary_lpa and job.max_salary_lpa %}
+                {{ job.min_salary_lpa }} - {{ job.max_salary_lpa }} LPA
+              {% else %}
+                Not disclosed
+              {% endif %}
+            </span>
+          </div>
+        </div>
 
+        <div class="col-md-6 col-lg-3">
+          <div class="d-flex align-items-center p-2 border rounded bg-light">
+            <i class="fa-solid fa-location-dot me-2 text-danger"></i>
+            <span>{{ job.location }}</span>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+          <div class="d-flex align-items-center p-2 border rounded bg-light">
+            <i class="fa-solid fa-users me-2 text-info"></i>
+            <span>
+              Openings: 
+              {% if job.openings %}
+                {{ job.openings }}
+              {% else %}
+                Not disclosed
+              {% endif %}
+            </span>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+          <div class="d-flex align-items-center p-2 border rounded bg-light">
+            <i class="fa-solid fa-clock me-2 text-warning"></i>
+            <span>
+              Posted: 
+              {% if job.created_at.date == today %}
+                Today
+              {% else %}
+                {{ job.created_at|timesince }} ago
+              {% endif %}
+            </span>
+          </div>
+        </div>
+        
       </div>
-          <a href="/apply/{{ job.slug }}" class="btn btn-primary">Apply</a>
+
+      <div class="d-flex justify-content-end mt-4">
+        <a href="/apply/{{ job.slug }}" class="btn btn-primary">
+          <i class="fa-solid fa-paper-plane me-1"></i> Apply
+        </a>
+      </div>
+
       <hr>
-      <div class="card-text">{{ job.description|safe }}</div>
+
+      <div class="mt-4">
+        <h5>Description</h5>
+        <div class="card-text">{{ job.description|safe }}</div>
+      </div>
+
     </div>
   </div>
 </div>
+
 {% else %}
-<div class="container my-2">
+<div class="container my-4">
   <div class="alert alert-warning">Job not found.</div>
 </div>
 {% endif %}

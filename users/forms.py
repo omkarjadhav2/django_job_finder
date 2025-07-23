@@ -1,8 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import CustomUser, SeekerProfile , EmployerProfile
-from django_select2.forms import ModelSelect2MultipleWidget
-
+from .models import CustomUser, SeekerProfile , EmployerProfile , Experience
 
 
 class SeekerRegisterForm(UserCreationForm):
@@ -58,3 +56,7 @@ class SeekerProfileForm(forms.ModelForm):
             'resume',
         ]
     
+class ExperienceForm(forms.ModelForm):
+    class Meta:
+        model = Experience
+        fields = ['company_name', 'role', 'years']

@@ -40,4 +40,12 @@ class EmployerProfile(models.Model):
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
+class Experience(models.Model):
+    seeker = models.ForeignKey(SeekerProfile, on_delete=models.CASCADE, related_name="experiences")
+    company_name = models.CharField(max_length=255)
+    role = models.CharField(max_length=255)
+    years = models.DecimalField(max_digits=4, decimal_places=1)  # e.g., 2.5 years
+
+    def __str__(self):
+        return f"{self.role} at {self.company_name}"
     

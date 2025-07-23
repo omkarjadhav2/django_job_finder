@@ -1,17 +1,19 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login ,authenticate , logout 
-from .forms import SeekerRegisterForm , SeekerProfileForm , EmployerRegisterForm
+from .forms import SeekerRegisterForm , SeekerProfileForm , EmployerRegisterForm , ExperienceForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render , get_object_or_404
 from django.contrib import messages
 from jobs.models import Job , Application
-from .models import SeekerProfile 
+from .models import SeekerProfile  , Experience
 from jobs.forms import ApplicationForm
 from django.utils import timezone
 from .decorators import employer_required
 from django.views.generic import  ListView
 from django.db.models import Q
 from django.core.paginator import Paginator , PageNotAnInteger , EmptyPage
+from django.forms import modelformset_factory
+
 
 def show_jobs(request):
     jobs = Job.objects.filter(is_approved=True).order_by('-created_at')
@@ -122,15 +124,35 @@ def profile(request):
 def edit_profile(request):
     user_profile = get_object_or_404(SeekerProfile, user=request.user)
 
+    ExperienceFormSet = modelformset_factory(Experience, form=ExperienceForm, extra=1, can_delete=True)
+    experience_qs = Experience.objects.filter(seeker=user_profile)
+
     if request.method == 'POST':
-        form = SeekerProfileForm(request.POST ,request.FILES, instance=user_profile  )
-        if form.is_valid():
+        form = SeekerProfileForm(request.POST, request.FILES, instance=user_profile)
+        formset = ExperienceFormSet(request.POST, queryset=experience_qs)
+
+        if form.is_valid() and formset.is_valid():
             form.save()
-            return redirect('profile') 
+            experiences = formset.save(commit=False)
+
+            for exp in experiences:
+                exp.seeker = user_profile
+                exp.save()
+
+            for obj in formset.deleted_objects:
+                obj.delete()
+
+            return redirect('profile')
     else:
         form = SeekerProfileForm(instance=user_profile)
+        formset = ExperienceFormSet(queryset=experience_qs)
 
-    return render(request, 'users/edit_profile.html', {'form': form})
+    context = {
+        'form': form,
+        'formset': formset,
+    }
+
+    return render(request, 'users/edit_profile.html', context)
 
 @login_required
 def seeker_dashboard(request):
