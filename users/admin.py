@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import CustomUser
 from django.contrib.auth.admin import UserAdmin
-from .models import CustomUser, SeekerProfile ,EmployerProfile , Experience
+from .models import CustomUser, SeekerProfile ,EmployerProfile , Experience , Education
 
 @admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
@@ -14,11 +14,15 @@ class CustomUserAdmin(UserAdmin):
 class ExperienceInline(admin.TabularInline):
     model = Experience
     extra = 1
+
+class EducationInline(admin.TabularInline):
+    model = Education
+    extra = 1
     
 @admin.register(SeekerProfile)
 class SeekerProfileAdmin(admin.ModelAdmin):
     list_display = ['first_name', 'last_name', 'contact']
-    inlines = [ExperienceInline]
+    inlines = [ExperienceInline , EducationInline]
 
 admin.site.register(EmployerProfile)
 

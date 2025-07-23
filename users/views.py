@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login ,authenticate , logout 
-from .forms import SeekerRegisterForm , SeekerProfileForm , EmployerRegisterForm , ExperienceForm
+from .forms import SeekerRegisterForm , SeekerProfileForm , EmployerRegisterForm , ExperienceForm , EducationForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render , get_object_or_404
 from django.contrib import messages
 from jobs.models import Job , Application
-from .models import SeekerProfile  , Experience
+from .models import SeekerProfile  , Experience , Education
 from jobs.forms import ApplicationForm
 from django.utils import timezone
 from .decorators import employer_required
@@ -42,7 +42,7 @@ class SearchResultsView(ListView):
         job_list = Job.objects.all() 
         if query:
             job_list = job_list.filter(
-                Q(title__icontains=query) | Q(skills__icontains=query)
+                Q(title__icontains=query) | Q(skills__icontains=query) | Q(description__icontains=query)
             )
         if location:
             job_list = job_list.filter(location__name__icontains=location)
@@ -125,42 +125,51 @@ def edit_profile(request):
     user_profile = get_object_or_404(SeekerProfile, user=request.user)
 
     ExperienceFormSet = modelformset_factory(Experience, form=ExperienceForm, extra=1, can_delete=True)
+    EducationFormSet = modelformset_factory(Education, form=EducationForm, extra=1, can_delete=True)
     experience_qs = Experience.objects.filter(seeker=user_profile)
+    education_qs = Education.objects.filter(seeker=user_profile)
 
     if request.method == 'POST':
         form = SeekerProfileForm(request.POST, request.FILES, instance=user_profile)
         formset = ExperienceFormSet(request.POST, queryset=experience_qs)
+        education_formset = EducationFormSet(request.POST, queryset=education_qs)
 
-        if form.is_valid() and formset.is_valid():
+        if form.is_valid() and formset.is_valid() and education_formset.is_valid():
             form.save()
             experiences = formset.save(commit=False)
+            educations = education_formset.save(commit=False)
 
             for exp in experiences:
                 exp.seeker = user_profile
                 exp.save()
+                
+            for edu in educations:
+                edu.seeker = user_profile
+                edu.save()
 
             for obj in formset.deleted_objects:
+                obj.delete()
+            
+            for obj in education_formset.deleted_objects:
                 obj.delete()
 
             return redirect('profile')
     else:
         form = SeekerProfileForm(instance=user_profile)
         formset = ExperienceFormSet(queryset=experience_qs)
+        education_formset = EducationFormSet(queryset=education_qs)
 
     context = {
         'form': form,
         'formset': formset,
+        'education_formset': education_formset
     }
 
     return render(request, 'users/edit_profile.html', context)
 
 @login_required
 def seeker_dashboard(request):
-    applications = Application.objects.filter(applicant=request.user)
+    applications = Application.objects.filter(applicant=request.user).order_by('-applied_at')
     return render(request, 'users/seeker_dashboard.html', {'applications': applications})
 
-@login_required
-def application_status(request, id):
-    application = get_object_or_404(Application, pk = id ,applicant = request.user)
-    return render(request, 'users/application_status.html', {'application': application})
 

@@ -1,15 +1,62 @@
 {% extends "users/base.html" %}
 {% block content %}
-{% if user_profile %}
-  <h2>{{ user_profile.first_name }} {{ user_profile.last_name }}</h2>
-  <p>Contact: {{ user_profile.contact }}</p>  
-  <p>skills: {{ user_profile.location.city }}</p>  
-  <p>Education field: {{ user_profile.education_field }}</p>  
-  <p>Experience company: {{ user_profile.experience_company}}</p>  
-  <p>Company duration: {{ user_profile.company_duration }}</p>  
+<div class="container my-5">
+  <div class="card shadow-lg">
+    <div class="card-header bg-primary text-white">
+      <h3 class="mb-0">Your Profile</h3>
+    </div>
+    <div class="card-body bg-light">
+      {% if user_profile %}
+        <div class="mb-4">
+          <h4 class="mb-3">Profile Info</h4>
+          <p><strong>Name:</strong> {{ user_profile.first_name }} {{ user_profile.last_name }}</p>
+          <p><strong>Contact:</strong> {{ user_profile.contact }}</p>
+          <p><strong>Resume:</strong> 
+            {% if user_profile.resume %}
+              <span class="text-decoration-none text-primary">
+                {{ user_profile.resume.name|slice:"7:" }}
+              </span>
+            {% else %}
+              Not uploaded
+            {% endif %}
+          </p>
+        </div>
 
+        <div class="mb-4">
+          <h4 class="mb-3">Education</h4>
+          {% if user_profile.educations.all %}
+            <ul class="list-group">
+              {% for edu in user_profile.educations.all %}
+                <li class="list-group-item">
+                  <strong>{{ edu.institute_name }}</strong> – {{ edu.course_name }} ({{ edu.passing_year }})
+                </li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p class="text-muted">No education information available.</p>
+          {% endif %}
+        </div>
 
+        <div class="mb-4">
+          <h4 class="mb-3">Work Experience</h4>
+          {% if user_profile.experiences.all %}
+            <ul class="list-group">
+              {% for exp in user_profile.experiences.all %}
+                <li class="list-group-item">
+                  <strong>{{ exp.company_name }}</strong> – {{ exp.role }} ({{ exp.years }} years)
+                </li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p class="text-muted">No experience information available.</p>
+          {% endif %}
+        </div>
 
-  <a href="{% url 'edit_profile' %}" class="btn btn-dark">Edit Profile</a>
-{% endif %}
+        <a href="{% url 'edit_profile' %}" class="btn btn-outline-primary">Edit Profile</a>
+      {% else %}
+        <p class="text-danger">Profile not found.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
 {% endblock %}

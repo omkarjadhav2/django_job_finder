@@ -1,24 +1,71 @@
 {% extends "users/base.html" %}
-{% block title %}
-      seeker applications
-      {% endblock %}
+{% block title %}Seeker Applications{% endblock %}
 
 {% block content %}
-{% if applications %}
-{% for app in applications %}
-<h2>Name : {{app.applicant.first_name}}</h2>
-<h2>LastName : {{app.applicant.last_name}}</h2>
- <h2>Job name : {{app.job.title}}</h2>
- <h2>applied at : {{app.applied_at}}</h2>
-{% if app.applicant.seekerprofile.resume %}
-  <p>Resume: <a href="{{ app.applicant.seekerprofile.resume.url }}" target="_blank">Download</a></p>
-{% else %}
-  <p>No resume uploaded.</p>
-{% endif %}
+<div class="container my-5">
+  <h1 class="mb-4 text-center">Seeker Applications</h1>
 
+  {% if applications %}
+    {% for app in applications %}
+      <div class="card shadow-sm mb-5 border-0">
+        <div class="card-body">
 
-  <a href="status/{{app.id}}" class="btn btn-dark">view status</a>
- 
-{% endfor %}
-{% endif %}
+          <h4 class="card-title">{{ app.job.title }}</h4>
+          <h6 class="card-subtitle text-muted mb-3">
+            Applied {{ app.applied_at|timesince }} ago
+          </h6>
+
+          <p><strong>Applicant:</strong> {{ app.applicant.first_name }} {{ app.applicant.last_name }}</p>
+
+          {% if app.applicant.seekerprofile.resume %}
+            <p><strong>Resume:</strong> 
+              <a href="{{ app.applicant.seekerprofile.resume.url }}" target="_blank" class="btn btn-sm btn-outline-primary">Download</a>
+            </p>
+          {% else %}
+            <p class="text-muted">No resume uploaded.</p>
+          {% endif %}
+
+          <hr>
+
+          <!-- Experience Section -->
+          <div class="mb-4">
+            <h5>Experience</h5>
+            {% if app.applicant.seekerprofile.experiences.all %}
+              <ul class="list-group list-group-flush">
+                {% for exp in app.applicant.seekerprofile.experiences.all %}
+                  <li class="list-group-item">
+                    <strong>{{ exp.role }}</strong> at {{ exp.company_name }} – {{ exp.years }} years
+                  </li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <p class="text-muted">No experience information available.</p>
+            {% endif %}
+          </div>
+
+          <!-- Education Section -->
+          <div class="mb-2">
+            <h5>Education</h5>
+            {% if app.applicant.seekerprofile.educations.all %}
+              <ul class="list-group list-group-flush">
+                {% for edu in app.applicant.seekerprofile.educations.all %}
+                  <li class="list-group-item">
+                    <strong>{{ edu.institute_name }}</strong> – {{ edu.course_name }} ({{ edu.passing_year }})
+                  </li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <p class="text-muted">No education information available.</p>
+            {% endif %}
+          </div>
+
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <div class="alert alert-info text-center" role="alert">
+      No applications found.
+    </div>
+  {% endif %}
+</div>
 {% endblock %}

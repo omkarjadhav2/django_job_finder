@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import CustomUser, SeekerProfile , EmployerProfile , Experience
+from .models import CustomUser, SeekerProfile , EmployerProfile , Experience , Education
 
 
 class SeekerRegisterForm(UserCreationForm):
@@ -60,3 +60,8 @@ class ExperienceForm(forms.ModelForm):
     class Meta:
         model = Experience
         fields = ['company_name', 'role', 'years']
+
+class EducationForm(forms.ModelForm):
+    class Meta:
+        model = Education
+        fields = ['institute_name', 'course_name', 'passing_year']

@@ -44,8 +44,19 @@ class Experience(models.Model):
     seeker = models.ForeignKey(SeekerProfile, on_delete=models.CASCADE, related_name="experiences")
     company_name = models.CharField(max_length=255)
     role = models.CharField(max_length=255)
-    years = models.DecimalField(max_digits=4, decimal_places=1)  # e.g., 2.5 years
+    years = models.DecimalField(max_digits=4, decimal_places=1)  
 
     def __str__(self):
         return f"{self.role} at {self.company_name}"
+    
+class Education(models.Model):
+    seeker = models.ForeignKey(SeekerProfile, on_delete=models.CASCADE, related_name="educations")
+    institute_name = models.CharField(max_length=255)
+    course_name = models.CharField(max_length=255)
+    passing_year = models.IntegerField()
+
+    def __str__(self):
+        return f"{self.course_name} in {self.institute_name}"
+    
+    
     

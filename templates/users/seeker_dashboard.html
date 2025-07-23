@@ -1,16 +1,29 @@
 {% extends "users/base.html" %}
-{% block title %}
-      seeker dashboard
-      {% endblock %}
+{% block title %}Seeker Dashboard{% endblock %}
 
 {% block content %}
-{% if applications %}
-{% for app in applications %}
- <h2>Job name : {{app.job.title}}</h2>
- <h2>applied at : {{app.applied_at}}</h2>
+<div class="container my-5">
+  <h1 class="text-center mb-4">Your Applications</h1>
 
-  <a href="status/{{app.id}}" class="btn btn-dark">view status</a>
- 
-{% endfor %}
-{% endif %}
+  {% if applications %}
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+      {% for app in applications %}
+        <div class="col">
+          <div class="card h-100 shadow-sm border-1">
+            <div class="card-body">
+              <h5 class="card-title">{{ app.job.title }}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">{{ app.job.company_name }}</h6>
+              <p class="mb-0"><strong>Applied:</strong> {{ app.applied_at|date:"F j, Y, g:i a" }}</p>
+              <small class="text-muted">{{ app.applied_at|timesince }} ago</small>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="alert alert-info text-center" role="alert">
+      You haven't applied to any jobs yet.
+    </div>
+  {% endif %}
+</div>
 {% endblock %}
