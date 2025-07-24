@@ -111,7 +111,7 @@ def apply_for_job(request, slug):
             return redirect('home')
     else:
         form = ApplicationForm()
-    return render (request , 'users/apply_job.html' , {'form': form})
+    return render (request , 'users/apply_job.html' , {'form': form , "job": job})
 
 
 

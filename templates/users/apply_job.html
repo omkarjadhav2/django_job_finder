@@ -1,16 +1,26 @@
 {% extends "users/base.html" %}
-{% block title %}
-      apply for job
-      {% endblock %}
+{% block title %}Apply for Job{% endblock %}
 
 {% block content %}
-<div class="container mt-4">
-  <h2>apply for this job{{job.title}}</h2>
-  <form method="POST">
-    {% csrf_token %}
-    <p>{{form.content.label}} {{form.content}}</p>
-    <p>{{form.experience.label}} {{form.experience}}</p>
-    <button type="submit" class="btn btn-primary">apply</button>
-  </form>
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card shadow-sm border-0">
+        <div class="card-body">
+          <h3 class="card-title mb-4 text-center">Apply for: {{ job.title }}</h3>
+          <form method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="id_content" class="form-label">Why are you interested in this role?</label>
+              <span class="form-control">{{ form.content }}</span>
+            </div>
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary">Submit Application</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}

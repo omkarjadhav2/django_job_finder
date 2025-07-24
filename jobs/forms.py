@@ -18,4 +18,4 @@ class JobForm(ModelForm):
 class ApplicationForm(ModelForm):
     class Meta:
         model = Application
-        fields = ['content', 'experience' ]
+        fields = ['content']
