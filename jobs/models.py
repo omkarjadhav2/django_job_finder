@@ -22,7 +22,6 @@ class Job(models.Model):
         ('Hybrid' , 'Hybrid'),
     ]
     employer = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    id = models.IntegerField(primary_key=True)
     title = models.CharField(max_length=255)
     slug = models.SlugField(blank=True, unique=True)
     description = CKEditor5Field('Job Description', config_name='default')
