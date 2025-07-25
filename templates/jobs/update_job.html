@@ -1,13 +1,11 @@
 <h2>update a Job</h2>
 
-{% if job %}
 <form method="post">
   {% csrf_token %}
-  <input type="text" name="title" placeholder="Job Title" value="{{job.title}}"><br>
-  <input type="text" name="description" placeholder="Job Description" value="{{job.description}}"><br>
-  <button type="submit">Submit</button>
+  {{form.media}}
+  {{form.as_p}}
+  <button type="submit">POST JOB</button>
 </form>
-{% endif %}
 
 {% if messages %}
 <ul class="messages">

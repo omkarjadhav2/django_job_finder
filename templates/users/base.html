@@ -38,6 +38,14 @@
         <li class="nav-item">
           <a class="nav-link active" href="#" tabindex="-1" aria-disabled="true">About us</a>
         </li>
+        {% if user.is_employer %}
+         <li class="nav-item">
+          <a class="nav-link active" href="{% url "employer_dashboard" %}" tabindex="-1" aria-disabled="true">Employer Dashobard</a>
+        </li>
+        <li class="nav-item border border-3 border-info rounded ">
+          <a class="nav-link active" href="{% url "post_job" %}" tabindex="-1" aria-disabled="true">Create a Job Post</a>
+        </li>
+        {% endif %}
       </ul>
 
       {% if user.is_authenticated %}
@@ -46,7 +54,7 @@
           <a href="/profile" class="btn btn-primary mx-1">Profile</a>
           <form action="{% url 'logout' %}" method="post" class="d-inline">
             {% csrf_token %}
-            <button type="submit" class="btn btn-primary mx-1">Log Out</button>
+            <button type="submit" class="btn btn-outline-danger mx-1">Log Out</button>
           </form>
         </div>
       {% else %}

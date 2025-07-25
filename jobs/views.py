@@ -32,17 +32,17 @@ def update_post(request, slug):
     job = get_object_or_404(Job, employer=request.user, slug=slug)
 
     if request.method == 'POST':
-        title = request.POST['title']
-        description = request.POST['description']
-        
-        job.title = title
-        job.description = description
-        job.save()
-
+        form = JobForm(request.POST , instance=job)
+        if form.is_valid():
+            form.save()
         messages.success(request, 'Post updated successfully.')
         return redirect('employer_dashboard')
-
-    return render(request, 'jobs/update_job.html', {'job': job})
+    else:
+        form = JobForm(instance=job)
+    context = {
+        'form': form,
+    }
+    return render(request, 'jobs/update_job.html', context)
 
 @login_required
 @employer_required

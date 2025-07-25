@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render , get_object_or_404
 from django.contrib import messages
 from jobs.models import Job , Application
-from .models import SeekerProfile  , Experience , Education
+from .models import SeekerProfile  , Experience , Education , EmployerProfile
 from jobs.forms import ApplicationForm
 from django.utils import timezone
 from .decorators import employer_required
@@ -116,8 +116,14 @@ def apply_for_job(request, slug):
 
 
 def profile(request):
-    user_profile = get_object_or_404(SeekerProfile, user=request.user)
-    return render(request, 'users/profile.html', {'user_profile': user_profile})
+    user = request.user
+
+    if user.is_authenticated:
+        if user.is_seeker:
+            profile = get_object_or_404(SeekerProfile, user=request.user)
+        elif user.is_employer:
+            profile = get_object_or_404(EmployerProfile, user=user)
+    return render(request, 'users/profile.html', {'user_profile': profile})
 
 
 
