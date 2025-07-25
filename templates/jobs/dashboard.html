@@ -19,10 +19,11 @@
           <div class="card h-100 shadow-sm">
             <div class="card-body">
               <h5 class="card-title">{{ job.title }}</h5>
-              <p class="card-text">
-                <strong>Approval:</strong> {% if job.is_approved == true %} Approved {% else %} Not Approved{% endif %}<br>
-                <strong>Company :</strong> {{ job.company_name }}
-              </p>
+             <p class="card-text">
+  <strong>Approval:</strong> {% if job.is_approved %}Approved{% else %}Not Approved{% endif %}<br>
+  <strong>Company :</strong> {{ job.company_name }}
+</p>
+
               <div class="d-flex flex-wrap gap-2 mt-3">
                 <a href="update/{{ job.slug }}" class="btn btn-outline-primary btn-sm">Update</a>
                 <a href="delete/{{ job.slug }}" class="btn btn-outline-danger btn-sm">Delete</a>
