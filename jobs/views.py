@@ -10,7 +10,7 @@ from jobs.forms import JobForm , ApplicationForm
 @employer_required
 def post_job(request):
     if request.method == "POST":
-        form = JobForm(request.POST)
+        form = JobForm(request.POST , request.FILES)
         if form.is_valid():
             job = form.save(commit=False)
             job.employer = request.user  
@@ -29,10 +29,10 @@ def employer_dashboard(request):
 @login_required
 @employer_required
 def update_post(request, slug):
-    job = get_object_or_404(Job, employer=request.user, slug=slug)
+    job = get_object_or_404(Job, employer=request.user, slug=slug )
 
     if request.method == 'POST':
-        form = JobForm(request.POST , instance=job)
+        form = JobForm(request.POST , request.FILES, instance=job)
         if form.is_valid():
             form.save()
         messages.success(request, 'Post updated successfully.')
