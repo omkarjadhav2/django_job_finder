@@ -9,22 +9,71 @@
 {% for job in job_list %}
 <div class="container">
   <div class="d-flex flex-column align-items-center">
-    <div class="card col-12 col-sm-12 col-lg-6 my-3 mx-2">
-      <div class="card-body border border-info border-1 rounded">
-        <h5 class="card-title">{{ job.title }}</h5>
-        <h6 class="card-subtitle mb-2 text-muted">{{job.company_name}}</h6>
-        <p class="card-text">{{job.location}}</p>
-        <div>
-          <span class="badge bg-success"
-            >₹{{job.min_salary_lpa}}LPA - {{job.max_salary_lpa}}LPA a year</span
-          >
-          <span class="badge bg-primary">{{job.job_type}}</span>
-          <span class="badge bg-light text-dark">Day shift</span>
-          <span class="badge bg-info text-dark">Health insurance</span>
+
+    <div class="card job-card-container col-12 col-md-10 col-lg-6 my-3 shadow position-relative">
+
+     
+      <a href="/jobcard/{{ job.slug }}" class="stretched-link"></a>
+
+      <div class="card-body">
+        
+        <h5 class="card-title fw-bold">{{ job.title }}</h5>
+        <h6 class="card-subtitle text-muted mb-2">{{ job.company_name }}</h6>
+
+        
+        <p class="mb-3">
+          <i class="fa-solid fa-location-dot text-danger me-2"></i>{{ job.location }}
+        </p>
+
+       
+        <div class="d-flex flex-wrap gap-2 mb-3">
+
+          {% if job.sub_type %}
+          <span class="badge bg-primary">{{ job.sub_type }}</span>
+          {% endif %}
+
+          {% if job.min_salary_lpa and job.max_salary_lpa %}
+          <span class="badge bg-success">
+            ₹{{ job.min_salary_lpa }} - {{ job.max_salary_lpa }} LPA
+          </span>
+          {% else %}
+          <span class="badge bg-secondary">Salary: Not disclosed</span>
+          {% endif %}
+
+          {% if job.job_type %}
+          <span class="badge bg-primary">{{ job.job_type }}</span>
+          {% endif %}
+
+          {% if job.min_experience is not none %}
+          <span class="badge bg-light text-dark border border-1">
+            {{ job.min_experience }} - {{ job.max_experience }} Years
+          </span>
+          {% endif %}
+
+          <span class="badge bg-info text-dark">
+            Openings: 
+            {% if job.openings %}
+              {{ job.openings }}
+            {% else %}
+              Not disclosed
+            {% endif %}
+          </span>
+
         </div>
-        <a href="/jobcard/{{job.slug}}" class="btn btn-primary">Apply</a>
+
+       
+        <p class="text-muted mb-0">
+          <i class="fa-regular fa-clock me-2"></i>
+          Posted:
+          {% if job.created_at.date == today %}
+            Today
+          {% else %}
+            {{ job.created_at|timesince }} ago
+          {% endif %}
+        </p>
       </div>
     </div>
+
   </div>
 </div>
 

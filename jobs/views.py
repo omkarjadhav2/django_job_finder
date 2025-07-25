@@ -4,33 +4,22 @@ from django.contrib.auth.decorators import login_required
 from users.decorators import employer_required
 from django.contrib import messages
 from jobs.forms import JobForm , ApplicationForm
-from django.http import HttpResponseServerError
-import traceback
 
 
 @login_required
 @employer_required
 def post_job(request):
-    try:
-        if not request.user.is_authenticated or not request.user.is_employer:
-            return HttpResponseServerError("You are not authorized to post jobs.")
-
-        if request.method == "POST":
-            form = JobForm(request.POST, request.FILES)
-            if form.is_valid():
-                job = form.save(commit=False)
-                job.employer = request.user
-                job.save()
-                return redirect('employer_dashboard')
-            else:
-                print("Form Errors:", form.errors)
-        else:
-            form = JobForm()
-        return render(request, 'jobs/post_job.html', {'form': form})
-
-    except Exception as e:
-        print("Unexpected error:", traceback.format_exc())
-        return HttpResponseServerError("An unexpected error occurred. Check server logs.")
+    
+    if request.method == "POST":
+        form = JobForm(request.POST , request.FILES)
+        if form.is_valid():
+            job = form.save(commit=False)
+            job.employer = request.user  
+            job.save()
+            return redirect('employer_dashboard')  
+    else:
+        form = JobForm()
+    return render(request, 'jobs/post_job.html', {'form': form })
 
 def create(request):
     try:
