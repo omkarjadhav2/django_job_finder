@@ -24,10 +24,17 @@
           {% else %}
             <p class="text-muted">No resume uploaded.</p>
           {% endif %}
+          {% if app.content %}
+            <p> <strong>Content:</strong> 
+             <a class="text-muted text-decoration-none" >{{app.content}}</a>           
+          {% else %}
+            <a class="text-muted text-decoration-none">No content available.</a>
+          {% endif %}
+           </p>
+
 
           <hr>
 
-          <!-- Experience Section -->
           <div class="mb-4">
             <h5>Experience</h5>
             {% if app.applicant.seekerprofile.experiences.all %}
@@ -43,7 +50,6 @@
             {% endif %}
           </div>
 
-          <!-- Education Section -->
           <div class="mb-2">
             <h5>Education</h5>
             {% if app.applicant.seekerprofile.educations.all %}

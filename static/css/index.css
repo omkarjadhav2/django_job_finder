@@ -14,3 +14,17 @@
 .nav-link:hover {
   color: cornflowerblue !important;
 }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body > footer {
+  margin-top: auto;
+}
+footer .nav-link:hover {
+  color: #0f6efd; 
+  transition: color 0.3s ease-in-out;
+}
