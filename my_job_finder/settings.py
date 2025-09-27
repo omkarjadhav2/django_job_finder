@@ -86,8 +86,13 @@ WSGI_APPLICATION = 'my_job_finder.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+import dj_database_url
+
 DATABASES = {
-    'default': dj_database_url.config(default=os.getenv("DATABASE_URL"))
+    'default': dj_database_url.config(
+        default=os.getenv("DATABASE_URL"),
+        ssl_require=True  
+    )
 }
 
 # Password validation
